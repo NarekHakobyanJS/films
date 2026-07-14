@@ -8,16 +8,16 @@ import store from './store';
 import './style/style.css';
 import { genresAPI } from '../entities/genre/api';
 import { useEffect } from 'react';
+import { Header } from '../widgets/Header';
 
 
 export const App = () => {
-  useEffect(() => {
-    genresAPI.getGenres()
-  }, [])
+
   return (
     <>
       <Provider store={store}>
-        <RouterProvider router={router} />
+        <Header />
+        {/* <RouterProvider router={router} /> */}
       </Provider>
     </>
   )
