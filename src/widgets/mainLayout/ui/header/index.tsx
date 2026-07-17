@@ -1,10 +1,15 @@
 import { styled, alpha } from '@mui/material/styles';
-import {AppBar, Box, Toolbar, IconButton, Typography, InputBase} from '@mui/material';
+import { AppBar, Box, Toolbar, IconButton, Typography, InputBase } from '@mui/material';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 import SearchIcon from '@mui/icons-material/Search';
-import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getGenres } from '../../../../entities/genre/model';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -49,11 +54,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export const Header = () => {
-
-  const dispatch = useDispatch<any>()
+  const { genres } = useAppSelector((state) => state.genresData)
+  const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(getGenres())
-    
+
   }, [])
 
 
@@ -78,6 +83,16 @@ export const Header = () => {
           >
             Reelix
           </Typography>
+
+          <Autocomplete
+            size='small'
+            disablePortal
+            getOptionLabel={(option) => option.name}
+            options={genres}
+            sx={{ width: 300 }}
+            renderInput={(params) => <TextField {...params} label="Movie" />}
+          />
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
